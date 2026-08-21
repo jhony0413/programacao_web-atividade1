@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Adivinhação</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            align-items: center;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        main {
+            background: rgb(240, 240, 240);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 25%;
+            padding: 40px;
+            width: auto;
+        }
+
+        h1 {
+            color: rgb(0, 0, 0);
+            font-size: 1.5rem;
+        }
+
+        p {
+            color: rgb(0, 0, 0);
+        }
+
+        input {
+            border: 1px solid rgb(200, 200, 200);
+            border-radius: 5px;
+            font-size: 1rem;
+            padding: 10px;
+        }
+
+        input:focus {
+            outline: none;
+            outline: solid 1px rgb(0, 64, 128);
+        }
+
+        button {
+            background-color: rgb(0, 128, 255);
+            border: none;
+            border-radius: 5px;
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: rgb(0, 64, 128);
+        }
+
+        #msgacerto {
+            font-size: 2rem;
+        }
+
+        #msg {
+            font-weight: bold;
+        }
+
+        .gradmensagem {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-in-out;
+        }
+
+        .gradmensagem.ativo {
+            grid-template-rows: 1fr;
+        }
+
+        .mensagem {
+            overflow: hidden;
+        }
+
+        .mensagem p {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out 0.2s;
+        }
+
+        .gradmensagem.ativo .mensagem p {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>JOGO DE ADIVINHAÇÃO</h1>
+        <p>Eu tenho um número entre <strong>1</strong> e <strong>20</strong>.</p>
+        <p>Eu te desafio a descobrir qual é!</p>
+        <input type="number" id="resposta" min="1" max="20" placeholder="Digite sua resposta">
+        <button onclick="verificarResposta()">Chutar</button>
+
+        <div class="gradmensagem" id="gradmsgacerto">
+            <div class="mensagem">
+                <p id="msgacerto"></p>
+            </div>
+        </div>
+
+        <div class="gradmensagem" id="gradmsg">
+            <div class="mensagem">
+                <p id="msg"></p>
+            </div>
+        </div>
+
+        <p id="erros">Erros: 0</p>
+    </main>
+
+    <script>
+        var numero = Math.floor(Math.random() * (20 - 1 + 1)) + 1;
+        var erros = 0;
+        function verificarResposta() {
+            var resposta = Number(document.getElementById("resposta").value);
+            var msg = document.getElementById("msg");
+            var gradeMsg = document.getElementById("gradmsg");
+            var msgAcerto = document.getElementById("msgacerto");
+            var gradeMsgAcerto = document.getElementById("gradmsgacerto");
+            if (resposta < 1 || resposta > 20 || isNaN(resposta)) {
+                msg.textContent = "Digite um número entre 1 e 20";
+                gradeMsg.classList.add("ativo");
+                return;
+            }
+            if (resposta === numero) {
+                document.getElementById("msgacerto").textContent = `🥳${numero}!🎉`;
+                msg.textContent = `Boa! Você acertou meu número em ${erros + 1} tentativa${erros > 0 ? 's' : ''}!`;
+                gradeMsgAcerto.classList.add("ativo");
+                gradeMsg.classList.add("ativo");
+                document.getElementById("resposta").disabled = true;
+                return;
+            }
+            else if (resposta > numero) {
+                msg.textContent = `O meu número é menor que ${resposta}!`;
+            }
+            else if (resposta < numero) {
+                msg.textContent = `O meu número é maior que ${resposta}!`;
+            } else {
+                console.log(`Erro.`)
+            }
+            gradeMsg.classList.add("ativo");
+            erros++;
+            document.getElementById("erros").textContent = `Erros: ${erros}`;
+        }
+    </script>
+</body>
+
+</html>

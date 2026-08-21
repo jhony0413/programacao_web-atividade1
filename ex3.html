@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabuada de Multiplicação</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            align-items: center;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        main {
+            background: rgb(240, 240, 240);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 25%;
+            padding: 40px;
+            width: auto;
+        }
+
+        label {
+            color: rgb(0, 0, 0);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        input {
+            border: 1px solid rgb(200, 200, 200);
+            border-radius: 5px;
+            font-size: 1rem;
+            padding: 10px;
+        }
+
+        input:focus {
+            outline: none;
+            outline: solid 1px rgb(0, 64, 128);
+        }
+
+        button {
+            background-color: rgb(0, 128, 255);
+            border: 1px solid rgb(200, 200, 200);
+            border: none;
+            border-radius: 5px;
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: rgb(0, 64, 128);
+        }
+
+        .graderesultadoscoluna {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-in-out;
+        }
+
+        .graderesultadoscoluna.ativo {
+            grid-template-rows: 1fr;
+        }
+
+        .graderesultadoslinha {
+            display: grid;
+            gap: 10px;
+            grid-template-rows: repeat(10, 1fr);
+            overflow: hidden;
+        }
+
+        .valortabuada {
+            border-bottom: 1px dashed rgb(0, 64, 128);
+            color: #000000;
+            font-size: 1.2rem;
+            opacity: 0;
+            padding: 5px 0;
+            transition: opacity 0.3s ease-in-out 0.2s;
+        }
+
+        .graderesultadoscoluna.ativo .valortabuada {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <label for="numuser">Digite um número para ver sua respectiva tabuada de multiplicação:</label>
+        <input id="numuser" type="number" placeholder="Digite sua resposta">
+        <button onclick="calcularTabuada()">Calcular</button>
+        <div class="graderesultadoscoluna" id="gradeprincipal">
+            <div class="graderesultadoslinha">
+                <p class="valortabuada"></p>
+                <p class="valortabuada"></p>
+                <p class="valortabuada"></p>
+                <p class="valortabuada"></p>
+                <p class="valortabuada"></p>
+                <p class="valortabuada"></p>
+                <p class="valortabuada"></p>
+                <p class="valortabuada"></p>
+                <p class="valortabuada"></p>
+                <p class="valortabuada"></p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function calcularTabuada() {
+            let valor = Number(document.getElementById("numuser").value);
+            for (let i = 1; i <= 10; i++) {
+                let calculo = document.getElementsByClassName("valortabuada")[i - 1];
+                calculo.textContent = `${valor} x ${i} = ${valor * i}`;
+            }
+            let grade = document.getElementById("gradeprincipal");
+            grade.classList.add("ativo");
+        }
+    </script>
+</body>
+
+</html>

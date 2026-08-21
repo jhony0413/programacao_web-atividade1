@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedra, Papel ou Tesoura</title>
+
+    <style>
+        body {
+            background-color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Pedra, Papel ou Tesoura</h1>
+    <p>Abra o console do navegador para ver o resultado.</p>
+    <script>
+        let usuario = prompt("Escolha: pedra, papel ou tesoura:");
+        usuario = usuario.toLowerCase();
+        const opcoes = ["pedra", "papel", "tesoura"];
+        const numeroAleatorio = Math.floor(Math.random() * 3);
+        const computador = opcoes[numeroAleatorio];
+        console.log("Você escolheu: " + usuario);
+        console.log("Computador escolheu: " + computador)
+        if (!opcoes.includes(usuario)) {
+            console.log("Opção inválida! Escolha pedra, papel ou tesoura.");
+        }
+        else if (usuario === computador) {
+            console.log("Empate!");
+        }
+        else if ((usuario === "pedra" && computador === "tesoura") || (usuario === "papel" && computador === "pedra") || (usuario === "tesoura" && computador === "papel")) {
+            console.log("Você venceu!");
+        }
+        else {
+            console.log("O computador venceu!");
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedra, Papel, Tesoura</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            align-items: center;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        main {
+            background: rgb(240, 240, 240);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 25%;
+            padding: 40px;
+            width: auto;
+        }
+
+        h1 {
+            color: rgb(0, 0, 0);
+            font-size: 1.5rem;
+        }
+
+        label {
+            color: rgb(0, 0, 0);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        input {
+            border: 1px solid rgb(200, 200, 200);
+            border-radius: 5px;
+            font-size: 1rem;
+            padding: 10px;
+        }
+
+        input:focus {
+            outline: none;
+            outline: solid 1px rgb(0, 64, 128);
+        }
+
+        button {
+            background-color: rgb(0, 128, 255);
+            border: none;
+            border-radius: 5px;
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: rgb(0, 64, 128);
+        }
+
+        .gradmensagem {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-in-out;
+        }
+
+        .gradmensagem.ativo {
+            grid-template-rows: 1fr;
+        }
+
+        .mensagem {
+            overflow: hidden;
+        }
+
+        #mensagem {
+            opacity: 0;
+            white-space: pre-line;
+            transition: opacity 0.3s ease-in-out 0.2s;
+        }
+
+        .gradmensagem.ativo #mensagem {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Pedra, Papel, Tesoura!</h1>
+        <label for="escolha">Faça sua escolha:</label>
+        <input id="escolha" type="text" placeholder="1, 2, 3 ou uma opção">
+        <button onclick="definirVencedor()">JOGAR!</button>
+        <div class="gradmensagem" id="gradmensagem">
+            <div class="mensagem">
+                <p id="mensagem"></p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const opcoes = {
+            tesoura: 0,
+            pedra: 1,
+            papel: 2
+        };
+        const mensagem = document.getElementById("mensagem");
+        const escolha = document.getElementById("escolha");
+        const gradMensagem = document.getElementById("gradmensagem");
+        function definirVencedor() {
+            const entrada = escolha.value.trim().toLowerCase();
+            const escolhaUsuario = isNaN(entrada) ? opcoes[entrada] : Number(entrada) - 1;
+            if (escolhaUsuario < 0 || escolhaUsuario > 2 || isNaN(escolhaUsuario)) {
+                mensagem.textContent = 'Escolha uma opção válida!\n1 = Tesoura\n2 = Pedra\n3 = Papel';
+                gradMensagem.classList.add("ativo");
+                return;
+            }
+            const escolhaMaquina = Math.floor(Math.random() * 3);
+            const resultado = escolhaUsuario === escolhaMaquina ? "Empate!" : (escolhaUsuario - escolhaMaquina + 3) % 3 === 1 ? "Venceu!" : "Perdeu!";
+            mensagem.textContent = resultado;
+            gradMensagem.classList.add("ativo");
+        }
+    </script>
+</body>
+
+</html>
